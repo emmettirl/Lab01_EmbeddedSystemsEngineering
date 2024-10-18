@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <malloc.h>
+#include <string.h>
+
 struct Node {
 char * data;
 struct Node *ltree;
@@ -34,7 +37,7 @@ if (tree == NULL)
    inorder(tree->rtree);
 }
 
-main(){
+int tree_main(){
 head =insert(head,"hello ");
 head =insert(head,"good ");
 head =insert(head,"jack ");

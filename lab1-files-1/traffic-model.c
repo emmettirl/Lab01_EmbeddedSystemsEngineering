@@ -5,7 +5,7 @@
 
 struct State {
   unsigned long Out;
-  unsigned long Time; 
+  unsigned long Time;
   unsigned long Next[4];};
 typedef const struct State STyp;
 
@@ -28,7 +28,7 @@ unsigned long Input=0;
 
 // cc.byexamples.com calls this int kbhit(), to mirror the Windows console
 //  function of the same name.  Otherwise, the code is the same.
-int inputAvailable()  
+int inputAvailable()
 {
   struct timeval tv;
   fd_set fds;
@@ -40,8 +40,8 @@ int inputAvailable()
   return (FD_ISSET(0, &fds));
 }
 
-int main()
-{ 
+int traffic_model_main()
+{
     char data[200];
     int oldOutput = 0;
 
@@ -54,14 +54,14 @@ int main()
 /* TODO replace the following line with a printf of the current value of lights
         The value of the lights is in FSM[S].Out */
 
-       //LIGHT = FSM[S].Out;  
-      
-      
+       //LIGHT = FSM[S].Out;
+
+
 
   //  SysTick_Wait10ms(FSM[S].Time);   // no need of this line in initial testing
                                      // use usleep() instead of Syst=Tick_Wait
 
-    //Input = SENSOR;             // read sensors the input value is set in the 
+    //Input = SENSOR;             // read sensors the input value is set in the
                                 // if statement below
 
        if (inputAvailable()) {
@@ -71,7 +71,7 @@ int main()
 /* TODO  Set the input value to 00 or 01 or 10 or 11 binary i.e. 0,1,2,3 decimal depending on the input.
          For example If the user enters N set Input to 2 decimal i.e. 10 binary. */
 
-      
+
            }
        S = FSM[S].Next[Input];     // keep this line as is
        }

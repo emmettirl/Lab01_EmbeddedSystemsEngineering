@@ -1,6 +1,8 @@
 #include <ctype.h>
 #include <stdio.h>
-main(){
+#include <string.h>
+
+int id_main(){
 char buf[200];
 FILE *fp;
 fp=fopen("test.txt","r");
@@ -19,13 +21,13 @@ while (fgets(buf,100,fp)){
         printf("id = %s\n",id);
         j=0;
         }
-      
+
       }
 
 
    }
 }
 
-     
-   
-     
+
+
+

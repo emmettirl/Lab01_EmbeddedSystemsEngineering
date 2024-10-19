@@ -61,27 +61,36 @@ int traffic_model_main()
             unsigned long bit = (FSM[S].Out >> i) & 1;
             switch (i) {
                 case 5:
-                    printf("%d : %lu", i, bit);
+                    if (bit == 1){
+                        printf("%s, ", "North Green");
+                    }
                     break;
                 case 4:
-                    printf("%d : %lu", i, bit);
+                    if (bit == 1){
+                        printf("%s, ", "North Yellow");
+                    }
                     break;
                 case 3:
-                    printf("%d : %lu", i, bit);
+                    if (bit == 1){
+                        printf("%s, ", "North Red");
+                    }
                     break;
                 case 2:
-                    printf("%d : %lu", i, bit);
+                    if (bit == 1){
+                        printf("%s, ", "East Green");
+                    }
                     break;
                 case 1:
-                    printf("%d : %lu", i, bit);
+                    if (bit == 1){
+                        printf("%s, ", "East Yellow");
+                    }
                     break;
                 case 0:
-                    printf("%d : %lu", i, bit);
+                    if (bit == 1){
+                        printf("%s, ", "East Red");
+                    }
                     break;
             }
-            printf("\n");
-            fflush(stdout);
-
         }
         printf("\n");
         fflush(stdout);

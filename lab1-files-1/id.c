@@ -47,16 +47,18 @@ int id_main(){
     while (fgets(buf,100,fp)){
         unsigned long len = strlen(buf);
         for (j=0,i=0;i<len;i++){
-            // If the character is a letter or an underscore we know it is an ID
+            // If the current character is a letter or an underscore we know it is an ID,
             if (isalpha(buf[i]) || buf[i]=='_'){
                 // Create a new id_struct struct to store the ID and the line it was found on
                 struct id_struct currentId;
                 currentId.occurenceCount = 0;
 
                 // Copy the ID into the struct
+                // loop until we reach a non-alphanumeric character which will be the end of the ID
                 while (buf[i] && (isalnum(buf[i]) || buf[i]=='_')) {
                     currentId.identifier[j++] = buf[i++];
                 }
+                // Add a null terminator to the end of the ID string
                 currentId.identifier[j] = '\0';
 
                 // Check if the id_struct is already in the array
@@ -107,7 +109,7 @@ int id_main(){
 
     // Print out the identifiers
     for (i = 0; i < idCount; i++) {
-        printf("id_struct = %s, lines = ", identifiers[i].identifier);
+        printf("%s: ", identifiers[i].identifier);
         // Print out the line numbers for each id_struct
         for (j = 0; j < identifiers[i].occurenceCount; j++) {
             printf("%d ", identifiers[i].originalLineIndices[j]);

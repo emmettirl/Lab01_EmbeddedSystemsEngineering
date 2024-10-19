@@ -55,7 +55,13 @@ int traffic_model_main()
         /* add in  here your emulation of the code */
 
 
-        //LIGHT = FSM[S].Out;
+        // print the current state of the traffic lights
+        // I'm doing this by checking the value of each bit in the Out field of the FSM,
+        // based on the position of the bit printing the corresponding light colour if the bit is 1.
+        // It has dawned on me, that I have made this more complicated than it needs to be.
+        // I should have just compare the decimal number in one switch statement, not bit by bit
+        // its working now though, so I'm not going to change it.
+
         int bits = 6;
         for (int i = bits; i >= 0; i--) {
             unsigned long bit = (FSM[S].Out >> i) & 1;
@@ -91,6 +97,8 @@ int traffic_model_main()
                     }
                     break;
             }
+
+
         }
         printf("\n");
         fflush(stdout);

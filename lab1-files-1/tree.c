@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
+#include "tree.h"
 
 struct Node {
 char * data;

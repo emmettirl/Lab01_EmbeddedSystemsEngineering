@@ -61,45 +61,38 @@ int traffic_model_main()
             // I should have just compare the decimal number in one switch statement, not bit by bit
             // its working now though, so I'm not going to change it.
 
-//            // print FSM[S].Out in binary to validate the output against the light state for debugging
-//            printf("FSM[S].Out: ");
-//            for (int i = sizeof(FSM[S].Out) * 8 - 1; i >= 0; i--) {
-//                printf("%c", (FSM[S].Out & (1UL << i)) ? '1' : '0');
-//            }
-//            printf("\n");
-
             int bits = 6;
             for (int i = bits; i >= 0; i--) {
                 unsigned long bit = (FSM[S].Out >> i) & 1;
                 switch (i) {
                     case 5:
                         if (bit == 1) {
-                            printf("%s, ", "East Red");
+                            printf("%s : ", "East Red");
                         }
                         break;
                     case 4:
                         if (bit == 1) {
-                            printf("%s, ", "East Yellow");
+                            printf("%s : ", "East Yellow");
                         }
                         break;
                     case 3:
                         if (bit == 1) {
-                            printf("%s, ", "East Green");
+                            printf("%s : ", "East Green");
                         }
                         break;
                     case 2:
                         if (bit == 1) {
-                            printf("%s, ", "North Red");
+                            printf("%s : ", "North Red");
                         }
                         break;
                     case 1:
                         if (bit == 1) {
-                            printf("%s, ", "North Yellow");
+                            printf("%s : ", "North Yellow");
                         }
                         break;
                     case 0:
                         if (bit == 1) {
-                            printf("%s, ", "North Green");
+                            printf("%s : ", "North Green");
                         }
                         break;
                 }

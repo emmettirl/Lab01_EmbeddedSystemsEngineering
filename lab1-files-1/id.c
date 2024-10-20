@@ -6,13 +6,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "id.h"
-
-// Define a struct to store the id_struct, the line number it was found on and the occurenceCount of occurrences
-struct id_struct {
-    char identifier[200]; //assume max 200 characters
-    int originalLineIndices[100]; //assume max 100 occurences
-    int occurenceCount;
-};
+#include "tree.h"
 
 int id_main(){
     // Create an array of id_struct structures,
@@ -51,7 +45,7 @@ int id_main(){
             if (isalpha(buf[i]) || buf[i]=='_'){
                 // Create a new id_struct struct to store the ID and the line it was found on
                 struct id_struct currentId;
-                currentId.occurenceCount = 0;
+                currentId.occurrenceCount = 0;
 
                 // Copy the ID into the struct
                 // loop until we reach a non-alphanumeric character which will be the end of the ID
@@ -66,8 +60,8 @@ int id_main(){
                 for (int k = 0; k < idCount; k++) {
                     if (strcmp(identifiers[k].identifier, currentId.identifier) == 0) {
                         // If the id_struct is already in the array,
-                        // add the line number to the list of lines and increment the occurenceCount
-                        identifiers[k].originalLineIndices[identifiers[k].occurenceCount++] = lineCount;
+                        // add the line number to the list of lines and increment the occurrenceCount
+                        identifiers[k].originalLineIndices[identifiers[k].occurrenceCount++] = lineCount;
                         found = 1;
                         break;
                     }
@@ -79,7 +73,7 @@ int id_main(){
                     if (idCount < 100) {
                         strcpy(identifiers[idCount].identifier, currentId.identifier);
                         identifiers[idCount].originalLineIndices[0] = lineCount;
-                        identifiers[idCount].occurenceCount = 1;
+                        identifiers[idCount].occurrenceCount = 1;
                         idCount++;
                     } else {
                         printf("Error: Too many identifiers\n");
@@ -94,30 +88,12 @@ int id_main(){
         lineCount++;
     }
 
-    // Sort the identifiers by the id_struct alphabetically using strcmp and a bubble sorting algorithm
+    // Sort the identifiers by the id_struct alphabetically and print them using the tree.c functions
+    struct Node* root = NULL;
     for (i = 0; i < idCount; i++) {
-        for (j = i + 1; j < idCount; j++) {
-            // If the current id_struct is greater than the next one, swap them
-            if (strcmp(identifiers[i].identifier, identifiers[j].identifier) > 0) {
-                // Swap the identifiers using a temporary struct
-                struct id_struct temp = identifiers[i];
-                identifiers[i] = identifiers[j];
-                identifiers[j] = temp;
-            }
-        }
+        root = insert(root, identifiers[i]);
     }
-
-    // Print out the identifiers
-    for (i = 0; i < idCount; i++) {
-        printf("%s: ", identifiers[i].identifier);
-        // Print out the line numbers for each id_struct
-        for (j = 0; j < identifiers[i].occurenceCount; j++) {
-            printf("%d ", identifiers[i].originalLineIndices[j]);
-        }
-        printf("\n");
-        fflush(stdout);
-    }
-
+    inorder(root);
     fclose(fp);
     return 0;
 }

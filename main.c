@@ -5,7 +5,7 @@
 
 int main(void) {
 //    id_main();
-    traffic_model_main();
-//    tree_main();
+//    traffic_model_main();
+    tree_main();
     return 0;
 }

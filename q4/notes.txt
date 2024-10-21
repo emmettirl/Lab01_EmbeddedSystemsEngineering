@@ -1,8 +1,6 @@
 arm-none-eabi-as -mcpu=arm926ej-s -g startup-tm.s -o startup.o
 arm-none-eabi-gcc -c -mcpu=arm926ej-s -g traffic-model.c -o traffic-model.o
-arm-none-eabi-ld -T traffic-model.ld traffic-model.o startup.o -o test.elf
+arm-none-eabi-ld -T traffic-model.ld traffic-model.o startup.o -o traffic-model.elf
+arm-none-eabi-objcopy -O binary traffic-model.elf traffic-model.bin
 
-
-I'm running into an issue with system calls like printf not being defined.
-I was stuck on this for a while, and unfortunately I'm out of time to work on this.
-
+I was not able to get the program to successfully launch, it always hangs at the start.

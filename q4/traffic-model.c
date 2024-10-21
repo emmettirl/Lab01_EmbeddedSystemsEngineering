@@ -1,7 +1,23 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/select.h>
-#include <string.h>
+
+volatile unsigned int * const UART0DR = (unsigned int *)0x101f1000;
+
+void print_uart0(const char *s) {
+    while(*s != '\0') { /* Loop until end of string */
+        *UART0DR = (unsigned int)(*s); /* Transmit char */
+        s++; /* Next char */
+    }
+}
+
+int strcmp(const char *str1, const char *str2) {
+    while (*str1 && (*str1 == *str2)) {
+        str1++;
+        str2++;
+    }
+    return *(unsigned char *)str1 - *(unsigned char *)str2;
+}
 
 struct State {
 unsigned long Out;
@@ -69,56 +85,56 @@ int main()
                 switch (i) {
                     case 5:
                         if (bit == 1) {
-                            printf("%s : ", "East Red");
+                            print_uart0("East Red");
                         }
                         break;
                     case 4:
                         if (bit == 1) {
-                            printf("%s : ", "East Yellow");
+                            print_uart0("East Yellow");
                         }
                         break;
                     case 3:
                         if (bit == 1) {
-                            printf("%s : ", "East Green");
+                            print_uart0("East Green");
                         }
                         break;
                     case 2:
                         if (bit == 1) {
-                            printf("%s : ", "North Red");
+                            print_uart0("North Red");
                         }
                         break;
                     case 1:
                         if (bit == 1) {
-                            printf("%s : ", "North Yellow");
+                            print_uart0("North Yellow");
                         }
                         break;
                     case 0:
                         if (bit == 1) {
-                            printf("%s : ", "North Green");
+                            print_uart0("North Green");
                         }
                         break;
                 }
             }
-            printf("\n");
-            fflush(stdout);
+            print_uart0("\n");
         }
 
         //  SysTick_Wait10ms(FSM[S].Time);   // no need of this line in initial testing
                                      // use usleep() instead of Syst=Tick_Wait
 
-        //Input = SENSOR;             // read sensors the input value is set in the
+        int SENSOR = 0;
+        Input = SENSOR;             // read sensors the input value is set in the
                                 // if statement below
 
         if (inputAvailable()) {
             Input = 0;
-            scanf("%s", data);
+//            scanf("%s", data);
+            data[0] = 'N';
+            data[1] = '\0';
 
             if (strcmp(data, "N") == 0 || strcmp(data, "n") == 0) { Input = 0b10; }
             else if (strcmp(data, "E") == 0 || strcmp(data, "e") == 0) { Input = 0b01; }
             else if (strcmp(data, "B") == 0 || strcmp(data, "b") == 0) { Input = 0b11; }
             else { Input = 0b00; }
-
-            printf("Input is %d\n", Input);
 
             S = FSM[S].Next[Input];     // keep this line as is
             Input = 0;                  // reset the input
@@ -128,5 +144,7 @@ int main()
 }
 
 void c_entry(void) {
+    print_uart0("Hello world!\n");
     main();
 }
+
